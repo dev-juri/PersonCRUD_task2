@@ -1,7 +1,7 @@
 # PersonCRUD_task2 Documentation
 This project demonstrates CRUD operation on a resource Person.
 
-```baseUrl: http://five0juri-personcrud-task2.onrender.com```
+```baseUrl: https://five0juri-personcrud-task2.onrender.com```
 
 ## Endpoints
 Note:
@@ -29,16 +29,14 @@ Body should contain:
 Sample body:
 ```
 {
-    "name": "Oluwafemi Ojuri",
+    "name": "Oluwafemi",
     "age": 5,
     "gender": "Male"
 }
 ```
 
 Sample Request:
-```
-https://{baseUrl}/api/person
-```
+```{baseUrl}/api/person```
 
 Sample response:
 ```
@@ -54,9 +52,7 @@ Sample response:
 Use this endpoint to fetch a movie BY NAME.
 
 Sample Request
-```
-https://{baseUrl}/api/person/Oluwafemi
-```
+```{baseUrl}/api/person/Oluwafemi```
 
 Sample Response
 ```
@@ -64,10 +60,12 @@ Sample Response
     "status": 200,
     "message": "Successful",
     "data": {
-        "id":
-        "name": "Oluwafemi Ojuri",
-        "age": 5,
-        "gender": "Male"
+        "person": {
+            "id": "64ff73ac452fe02b75c391dc",
+            "name": "Oluwafemi",
+            "age": 5,
+            "gender": "Male"
+        }
     }
 }
 ```
@@ -85,16 +83,14 @@ Body should contain:
 Sample body:
 ```
 {
-    "name": "Oluwafemi Ojuri",
+    "name": "Oluwafemi",
     "age": 15,
     "gender": "Male"
 }
 ```
 
 Sample Request:
-```
-https://{baseUrl}/api/update/Oluwafemi
-```
+```{baseUrl}/api/update/Oluwafemi```
 
 Sample Response:
 ```
@@ -110,13 +106,13 @@ Sample Response:
 Use this endpoint to delete a person resource BY NAME
 
 Sample Request:
-```https://{baseUrl}/api/delete/Oluwafemi```
+```{baseUrl}/api/delete/Oluwafemi```
 
 Sample Response:
 ```
 {
-    	"status":  200,
-		"message": "Delete Successful",
-		"data":    null
+    "status":  200,
+	"message": "Delete Successful",
+	"data":    null
 }
 ```
