@@ -49,16 +49,10 @@ func ping(client *mongo.Client, ctx context.Context) error {
 
 func main() {
 
-	var cfg config
-
-	flag.IntVar(&cfg.port, "port", 4000, "API server port")
-	flag.Parse()
-
-	dbString := os.Getenv("DB_STRING")
-	if dbString != "" {
+	dbString, found := os.LookupEnv("DB_STRING")
+	if !found {
 		dbString = "mongodb://localhost:27017"
 	}
-	fmt.Println(dbString)
 
 	client, ctx, cancel, err := connect(dbString)
 	if err != nil {
@@ -67,6 +61,11 @@ func main() {
 	defer close(client, ctx, cancel)
 	ping(client, ctx)
 
+	var cfg config
+
+	flag.IntVar(&cfg.port, "port", 4000, "API server port")
+	flag.Parse()
+
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 
 	app := &application{
@@ -74,6 +73,9 @@ func main() {
 		logger,
 		client,
 	}
+
+	defer close(client, ctx, cancel)
+	ping(client, ctx)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
