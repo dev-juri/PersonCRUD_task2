@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -49,8 +50,18 @@ func ping(client *mongo.Client, ctx context.Context) error {
 
 func main() {
 
-	dbString, found := os.LookupEnv("DB_STRING")
-	if !found {
+	err := godotenv.Load("local.env")
+	if err != nil {
+		log.Println("Error loading .env file")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	dbString := os.Getenv("DB_STRING")
+	if dbString == "" {
 		dbString = "mongodb://localhost:27017"
 	}
 
