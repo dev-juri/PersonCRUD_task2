@@ -15,7 +15,7 @@ import (
 )
 
 type config struct {
-	port int
+	port     int
 	dbString string
 }
 type application struct {
@@ -56,6 +56,13 @@ func main() {
 	flag.StringVar(&cfg.dbString, "DB_STRING", "mongodb://localhost:27017", "Database String")
 	flag.Parse()
 
+	client, ctx, cancel, err := connect(cfg.dbString)
+	if err != nil {
+		panic(err)
+	}
+	defer close(client, ctx, cancel)
+	ping(client, ctx)
+
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 
 	app := &application{
@@ -63,13 +70,6 @@ func main() {
 		logger,
 		client,
 	}
-
-	client, ctx, cancel, err := connect(app.cfg.dbString)
-	if err != nil {
-		panic(err)
-	}
-	defer close(client, ctx, cancel)
-	ping(client, ctx)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
