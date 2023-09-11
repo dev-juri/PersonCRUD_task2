@@ -1,20 +1,21 @@
 package data
 
 import (
-	"github.com/dev-juri/PersonCRUD_task2/internal/validator"
 	"strings"
+
+	"github.com/dev-juri/PersonCRUD_task2/internal/validator"
 )
 
 type Person struct {
-	ID     string `json:"id"`
-	Name   string `json:"name"`
-	Age    int32  `json:"age"`
-	Gender string `json:"gender"`
+	ID     interface{} `json:"id,omitempty" bson:"_id"`
+	Name   string      `json:"name" bson:"name"`
+	Age    int         `json:"age" bson:"age"`
+	Gender string      `json:"gender" bson:"gender"`
 }
 
 func ValidatePerson(v *validator.Validator, person *Person) {
 
-	if person.Age == 0 {
+	if person.Age <= 0 {
 		v.AddError("Age should be greater than 0")
 		return
 	}
@@ -24,8 +25,8 @@ func ValidatePerson(v *validator.Validator, person *Person) {
 		return
 	}
 
-	if strings.ToLower(person.Gender) != "male" || strings.ToLower(person.Gender) != "female" {
-		v.AddError("Invalid gender specified, should be male of female")
+	/***if strings.ToLower(person.Gender) != "male" || strings.ToLower(person.Gender) != "female" {
+		v.AddError("gender should be male or female")
 		return
-	}
+	}***/
 }
