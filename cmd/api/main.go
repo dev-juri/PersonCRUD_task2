@@ -16,6 +16,7 @@ import (
 
 type config struct {
 	port int
+	dbString string
 }
 type application struct {
 	config   config
@@ -49,16 +50,10 @@ func ping(client *mongo.Client, ctx context.Context) error {
 
 func main() {
 
-	client, ctx, cancel, err := connect("mongodb://localhost:27017")
-	if err != nil {
-		panic(err)
-	}
-	defer close(client, ctx, cancel)
-	ping(client, ctx)
-
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 4000, "API server port")
+	flag.StringVar(&cfg.dbString, "DB_STRING", "mongodb://localhost:27017", "Database String")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
@@ -68,6 +63,13 @@ func main() {
 		logger,
 		client,
 	}
+
+	client, ctx, cancel, err := connect(app.cfg.dbString)
+	if err != nil {
+		panic(err)
+	}
+	defer close(client, ctx, cancel)
+	ping(client, ctx)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
