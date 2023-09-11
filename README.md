@@ -19,10 +19,12 @@ Use this endpoint to create a person object.
 
 Requirement:
 Body should contain:
+```
   Key       Type        Validation
 - name      string  must not be an empty string
 - age       int     must be not be less than or equal to zero
 - gender    string
+```
 
 Sample body:
 ```
