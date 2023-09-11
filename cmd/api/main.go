@@ -53,7 +53,7 @@ func main() {
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 4000, "API server port")
-	flag.StringVar(&cfg.dbString, "DB_STRING", "mongodb://localhost:27017", "Database String")
+	flag.StringVar(&cfg.dbString, "DB_STRING", "mongodb://mongo:fbhp9upspVW5yE2OwGDN@containers-us-west-170.railway.app:6870", "Database String")
 	flag.Parse()
 
 	client, ctx, cancel, err := connect(cfg.dbString)
