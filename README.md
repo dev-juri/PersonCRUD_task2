@@ -57,7 +57,7 @@ Sample response:
 
 
 ### 2. /api/person/:name (Method: GET)
-Use this endpoint to fetch a movie BY NAME.
+Use this endpoint to fetch a person BY NAME.
 
 Sample Request
 ```{baseUrl}/api/person/Oluwafemi```
