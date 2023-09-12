@@ -1,5 +1,6 @@
 # PersonCRUD_task2 Documentation
 This project demonstrates CRUD operation on a resource Person.
+A NoSQL database was used, you can view the collection model along side the UML class diagram for the application [here](https://lucid.app/documents/view/260db3b1-1d9b-4835-9f19-b8181d2b3cb8)
 
 ```baseUrl: https://five0juri-personcrud-task2.onrender.com```
 
