@@ -133,4 +133,4 @@ Sample Response:
 ```
 
 ### Testing 
-[Test the API on Postman here](https://www.postman.com/descent-module-technologist-85749546/workspace/public/collection/14969266-d38c4aed-1403-4004-9ae1-b9d7f87f5177?action=share&creator=14969266)
+Test the API on Postman [here](https://api.postman.com/collections/14969266-d38c4aed-1403-4004-9ae1-b9d7f87f5177?access_key=PMAT-01HA5D9QVQCWK4G7RSF0PPN34W)
