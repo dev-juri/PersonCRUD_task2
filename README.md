@@ -131,3 +131,6 @@ Sample Response:
 	"data":    null
 }
 ```
+
+### Testing 
+Test the API on Postman [here](https://api.getpostman.com/collections/14969266-d38c4aed-1403-4004-9ae1-b9d7f87f5177)
