@@ -44,7 +44,14 @@ Sample response:
 {
     "status": 200,
     "message": "Person created successfully",
-    "data": null
+    "data": {
+        "person": {
+            "id": "64ff73ac452fe02b75c391dc",
+            "name": "Oluwafemi",
+            "age": 5,
+            "gender": "Male"
+        }
+    }
 }
 ```
 
@@ -96,9 +103,16 @@ Sample Request:
 Sample Response:
 ```
 {
-    	"status":  200,
-		"message": "Update Successful",
-		"data":    null
+    "status":  200,
+	"message": "Update Successful",
+	"data":    {
+        "person": {
+            "id": "64ff73ac452fe02b75c391dc",
+            "name": "Oluwafemi",
+            "age": 15,
+            "gender": "Male"
+        }
+    }
 }
 ```
 
@@ -113,7 +127,7 @@ Sample Response:
 ```
 {
     "status":  200,
-	"message": "Delete Successful",
+	"message": "Record for person with name Oluwafemi deleted successfully",
 	"data":    null
 }
 ```

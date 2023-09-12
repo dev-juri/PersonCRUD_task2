@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -47,7 +48,7 @@ func (app *application) createPerson(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
-	_, err = p.InsertOne(ctx, bson.M{
+	value, err := p.InsertOne(ctx, bson.M{
 		"_id":    primitive.NewObjectID(),
 		"name":   person.Name,
 		"age":    person.Age,
@@ -59,7 +60,9 @@ func (app *application) createPerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := result{Status: http.StatusOK, Message: "Person created successfully", Data: nil}
+	person.ID = value.InsertedID
+
+	res := result{Status: http.StatusOK, Message: "Person created successfully", Data: envelope{"person": person}}
 
 	err = app.writeJSON(w, http.StatusCreated, res, nil)
 	if err != nil {
@@ -139,10 +142,14 @@ func (app *application) updatePerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	person.Name = input.Name
+	person.Age = input.Age
+	person.Gender = input.Gender
+
 	res := result{
 		Status:  http.StatusOK,
 		Message: "Update Successful",
-		Data:    nil,
+		Data:    envelope{"person": person},
 	}
 
 	err = app.writeJSON(w, http.StatusOK, res, nil)
@@ -172,7 +179,7 @@ func (app *application) deletePerson(w http.ResponseWriter, r *http.Request) {
 
 	result := result{
 		Status:  http.StatusOK,
-		Message: "Delete Successful",
+		Message: fmt.Sprintf("Record for person with name %s deleted successfully", name),
 		Data:    nil,
 	}
 
