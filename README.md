@@ -57,7 +57,7 @@ Sample response:
 
 
 ### 2. /api/person/:name (Method: GET)
-Use this endpoint to fetch a person BY NAME.
+Use this endpoint to fetch a person using the user's id.
 
 Sample Request
 ```{baseUrl}/api/64ff73ac452fe02b75c391dc```
@@ -79,7 +79,7 @@ Sample Response
 ```
 
 ### 3. /api/:id (Method: PUT)
-Use this endpoint to update a person resource BY NAME
+Use this endpoint to update a person resource using the user's id.
 
 Requirement:
 Body should contain:
@@ -118,7 +118,7 @@ Sample Response:
 
 
 ### 4. /api/:id (Method: DELETE)
-Use this endpoint to delete a person resource BY NAME
+Use this endpoint to delete a person resource using the user's id.
 
 Sample Request:
 ```{baseUrl}/api/64ff73ac452fe02b75c391dc```
