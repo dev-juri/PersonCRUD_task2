@@ -56,8 +56,8 @@ Sample response:
 ```
 
 
-### 2. /api/:id (Method: GET)
-Use this endpoint to fetch a movie BY NAME.
+### 2. /api/person/:name (Method: GET)
+Use this endpoint to fetch a person BY NAME.
 
 Sample Request
 ```{baseUrl}/api/64ff73ac452fe02b75c391dc```
@@ -133,4 +133,4 @@ Sample Response:
 ```
 
 ### Testing 
-Test the API on Postman [here](https://api.getpostman.com/collections/14969266-d38c4aed-1403-4004-9ae1-b9d7f87f5177)
+Test the API on Postman [here](https://elements.getpostman.com/redirect?entityId=14969266-d38c4aed-1403-4004-9ae1-b9d7f87f5177&entityType=collection)
