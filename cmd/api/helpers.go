@@ -22,7 +22,7 @@ type envelope map[string]interface{}
 func (app *application) readIDParam(r *http.Request) (string, error) {
 	params := httprouter.ParamsFromContext(r.Context())
 
-	id := params.ByName("name")
+	id := params.ByName("id")
 
 	if id == "" {
 		return "", errors.New("invalid id parameter")

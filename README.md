@@ -15,7 +15,7 @@ All responses from this API return in the format below, where "data" can either 
 }
 ```
 
-### 1. /api/person (Method: POST)
+### 1. /api (Method: POST)
 Use this endpoint to create a person object.
 
 Requirement:
@@ -37,7 +37,7 @@ Sample body:
 ```
 
 Sample Request:
-```{baseUrl}/api/person```
+```{baseUrl}/api```
 
 Sample response:
 ```
@@ -56,11 +56,11 @@ Sample response:
 ```
 
 
-### 2. /api/person/:name (Method: GET)
+### 2. /api/:id (Method: GET)
 Use this endpoint to fetch a movie BY NAME.
 
 Sample Request
-```{baseUrl}/api/person/Oluwafemi```
+```{baseUrl}/api/64ff73ac452fe02b75c391dc```
 
 Sample Response
 ```
@@ -78,7 +78,7 @@ Sample Response
 }
 ```
 
-### 3. /api/update/:name (Method: PUT)
+### 3. /api/:id (Method: PUT)
 Use this endpoint to update a person resource BY NAME
 
 Requirement:
@@ -98,7 +98,7 @@ Sample body:
 ```
 
 Sample Request:
-```{baseUrl}/api/update/Oluwafemi```
+```{baseUrl}/api/64ff73ac452fe02b75c391dc```
 
 Sample Response:
 ```
@@ -117,11 +117,11 @@ Sample Response:
 ```
 
 
-### 4. /api/delete/:name (Method: DELETE)
+### 4. /api/:id (Method: DELETE)
 Use this endpoint to delete a person resource BY NAME
 
 Sample Request:
-```{baseUrl}/api/delete/Oluwafemi```
+```{baseUrl}/api/64ff73ac452fe02b75c391dc```
 
 Sample Response:
 ```

@@ -71,7 +71,7 @@ func (app *application) createPerson(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) fetchPerson(w http.ResponseWriter, r *http.Request) {
-	name, err := app.readIDParam(r)
+	id, err := app.readIDParam(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
 		return
@@ -83,10 +83,16 @@ func (app *application) fetchPerson(w http.ResponseWriter, r *http.Request) {
 
 	opts := options.FindOne()
 
-	var person data.Person
-	err = p.FindOne(ctx, bson.M{"name": name}, opts).Decode(&person)
+	_id, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		app.personNotFound(w, r, name)
+		app.serverErrorResponse(w, r, mongo.ErrInvalidIndexValue)
+		return
+	}
+
+	var person data.Person
+	err = p.FindOne(ctx, bson.M{"_id": _id}, opts).Decode(&person)
+	if err != nil {
+		app.personNotFound(w, r, id)
 		return
 	}
 
@@ -104,7 +110,7 @@ func (app *application) fetchPerson(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) updatePerson(w http.ResponseWriter, r *http.Request) {
-	name, err := app.readIDParam(r)
+	id, err := app.readIDParam(r)
 
 	if err != nil {
 		app.notFoundResponse(w, r)
@@ -123,25 +129,27 @@ func (app *application) updatePerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	_id, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		app.serverErrorResponse(w, r, mongo.ErrInvalidIndexValue)
+		return
+	}
+
 	p := app.getDatabase().Collection("person")
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	var person data.Person
-	err = p.FindOne(ctx, bson.M{"name": name}, options.FindOne()).Decode(&person)
-	if err != nil {
-		app.personNotFound(w, r, name)
-		return
-	}
 
 	u := bson.D{{"$set", bson.D{{"name", input.Name}, {"age", input.Age}, {"gender", input.Gender}}}}
 
-	_, err = p.UpdateOne(ctx, bson.D{{"_id", person.ID}}, u, options.Update())
+	_, err = p.UpdateOne(ctx, bson.D{{"_id", _id}}, u, options.Update())
 	if err != nil {
-		app.updateFailed(w, r, name)
+		app.updateFailed(w, r, id)
 		return
 	}
 
+	person.ID = id
 	person.Name = input.Name
 	person.Age = input.Age
 	person.Gender = input.Gender
@@ -160,9 +168,15 @@ func (app *application) updatePerson(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) deletePerson(w http.ResponseWriter, r *http.Request) {
-	name, err := app.readIDParam(r)
+	id, err := app.readIDParam(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
+		return
+	}
+
+	_id, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		app.serverErrorResponse(w, r, mongo.ErrInvalidIndexValue)
 		return
 	}
 
@@ -170,7 +184,7 @@ func (app *application) deletePerson(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
-	_, err = p.DeleteOne(ctx, bson.M{"name": name}, options.Delete())
+	_, err = p.DeleteOne(ctx, bson.M{"_id": _id}, options.Delete())
 
 	if err != nil {
 		app.serverErrorResponse(w, r, errors.New("internal server error"))
@@ -179,7 +193,7 @@ func (app *application) deletePerson(w http.ResponseWriter, r *http.Request) {
 
 	result := result{
 		Status:  http.StatusOK,
-		Message: fmt.Sprintf("Record for person with name %s deleted successfully", name),
+		Message: fmt.Sprintf("Record for person with id %s deleted successfully", id),
 		Data:    nil,
 	}
 

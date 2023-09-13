@@ -47,17 +47,12 @@ func (app *application) failedValidationResponse(w http.ResponseWriter, r *http.
 	app.errorResponse(w, r, http.StatusUnprocessableEntity, error)
 }
 
-func (app *application) personExists(w http.ResponseWriter, r *http.Request, name string) {
-	message := fmt.Sprintf("the person with name %s already exists", name)
-	app.errorResponse(w, r, http.StatusUnprocessableEntity, message)
-}
-
-func (app *application) personNotFound(w http.ResponseWriter, r *http.Request, name string) {
-	message := fmt.Sprintf("the person with name %s doesn't exists", name)
+func (app *application) personNotFound(w http.ResponseWriter, r *http.Request, id string) {
+	message := fmt.Sprintf("the person with id %s doesn't exists", id)
 	app.errorResponse(w, r, http.StatusNotFound, message)
 }
 
-func (app *application) updateFailed(w http.ResponseWriter, r *http.Request, name string) {
-	message := fmt.Sprintf("update failed, please confirm %s is an existing user", name)
+func (app *application) updateFailed(w http.ResponseWriter, r *http.Request, id string) {
+	message := fmt.Sprintf("update failed, please confirm %s is an existing user", id)
 	app.errorResponse(w, r, http.StatusNotFound, message)
 }

@@ -12,10 +12,10 @@ func (app *application) routes() *httprouter.Router {
 	router.NotFound = http.HandlerFunc(app.notFoundResponse)
 	router.MethodNotAllowed = http.HandlerFunc(app.methodNotAllowedResponse)
 
-	router.HandlerFunc(http.MethodPost, "/api/person", app.createPerson)
-	router.HandlerFunc(http.MethodGet, "/api/person/:name", app.fetchPerson)
-	router.HandlerFunc(http.MethodPut, "/api/update/:name", app.updatePerson)
-	router.HandlerFunc(http.MethodDelete, "/api/delete/:name", app.deletePerson)
+	router.HandlerFunc(http.MethodPost, "/api", app.createPerson)
+	router.HandlerFunc(http.MethodGet, "/api/:id", app.fetchPerson)
+	router.HandlerFunc(http.MethodPut, "/api/:id", app.updatePerson)
+	router.HandlerFunc(http.MethodDelete, "/api/:id", app.deletePerson)
 
 	return router
 }
